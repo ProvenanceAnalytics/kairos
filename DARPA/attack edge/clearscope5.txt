@@ -1,0 +1,61 @@
+def keyword_hit(line):
+    attack_nodes=[
+            'barephone-instr.apk',
+        'screencap-instr.apk',
+           'de.belu.appstarter',
+        './run_webserver.sh',
+        'appstarter-instr.apk',
+        'screenshot.png',
+        'screenshot',
+        '/dev/msm_g711tlaw',
+        'com.android.providers.contacts',
+        'barephone',
+        'busybox',
+
+        
+        '/data/local/tmp',
+        'calllog.db',
+        'calendar.db',        
+        'external.db',
+        'internal.db',
+        'lastAccess.db',
+        'mmssms.db',
+        
+
+#         '77.138.117.150',      
+#         '128.55.12.33',
+#         '128.55.12.233',
+#         '128.55.12.166',
+#         '49.8.46.240',
+#         '42.183.7.162',
+#         '133.39.25.45', 
+        ]
+
+    flag=False
+    for i in attack_nodes:
+        if i in line:
+            flag=True
+            break
+    return flag
+
+
+
+# files=['graph_5_15/2019-05-15 14:07:59.753000000~2019-05-15 14:23:00.265000000.txt',
+# 'graph_5_15/2019-05-15 14:23:00.265000000~2019-05-15 14:38:02.135000000.txt',
+#     'graph_5_15/2019-05-15 15:38:59.175000000~2019-05-15 15:55:38.955000000.txt', 
+# 'graph_5_15/2019-05-15 15:55:38.955000000~2019-05-15 16:11:27.687000000.txt',    
+#      'graph_5_17/2019-05-17 14:50:52.897000000~2019-05-17 15:06:00.371000000.txt', 
+#      'graph_5_17/2019-05-17 15:06:00.371000000~2019-05-17 15:21:40.474000000.txt', 
+#      'graph_5_17/2019-05-17 15:21:40.474000000~2019-05-17 15:36:41.964000000.txt', 
+#      'graph_5_17/2019-05-17 15:51:43.493000000~2019-05-17 16:06:44.953000000.txt', 
+#      'graph_5_17/2019-05-17 16:21:46.485000000~2019-05-17 16:36:47.843000000.txt', 
+#     'graph_5_17/2019-05-17 16:36:47.843000000~2019-05-17 16:51:49.352000000.txt']
+files=[]
+
+filelist = os.listdir("graph_5_15")
+for f in filelist:    
+    files.append("graph_5_15/"+f) 
+    
+filelist = os.listdir("graph_5_17")
+for f in filelist:
+    files.append("graph_5_17/"+f) 

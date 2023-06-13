@@ -1,0 +1,29 @@
+def keyword_hit(line):
+    attack_nodes=[
+   '142.20.56.204',
+        'lsass.exe',
+        '142.20.61.130',
+        '132.197.158.98',
+        'Credentials',
+             
+        ]
+    flag=False
+    for i in attack_nodes:
+        if i in line:
+            flag=True
+            break
+    return flag
+
+
+
+files=[]
+temp_file=[
+     '2019-09-23 11:19:28.196~2019-09-23 11:33:32.442.txt',
+     '2019-09-23 11:34:24.442~2019-09-23 11:48:46.551.txt',
+
+     '2019-09-23 12:51:12.936~2019-09-23 13:04:47.618.txt',
+     '2019-09-23 13:06:08.618~2019-09-23 13:19:59.803.txt',
+]
+for f in temp_file:
+    files.append("./graph_9_23/"+f)
+    

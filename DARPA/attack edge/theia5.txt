@@ -1,0 +1,29 @@
+
+
+def keyword_hit(line):
+    attack_nodes=[
+#             'sshd',
+            'sshdlog',
+        'shm',
+#          'python',
+#             'firefox',
+        '189.141.204.211',
+        '208.203.20.42',
+       
+#         '',
+#         '',
+#         '',
+        ]
+    flag=False
+    for i in attack_nodes:
+        if i in line:
+            flag=True
+            break
+    return flag
+
+
+
+files=[    
+    'graph_5_15/2019-05-15 13:58:15.520482252~2019-05-15 14:13:37.257086895.txt',
+    'graph_5_15/2019-05-15 14:44:51.773840192~2019-05-15 15:00:26.765466538.txt',]
+
