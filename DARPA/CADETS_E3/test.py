@@ -1,3 +1,8 @@
+##########################################################################################
+# Some of the code is adapted from:
+# https://github.com/pyg-team/pytorch_geometric/blob/master/examples/tgn.py
+##########################################################################################
+
 import logging
 
 from kairos_utils import *

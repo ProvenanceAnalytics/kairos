@@ -7,7 +7,6 @@ from psycopg2 import extras as ex
 import os.path as osp
 import os
 import copy
-import matplotlib.pyplot as plt
 import torch
 from torch.nn import Linear
 from sklearn.metrics import average_precision_score, roc_auc_score
@@ -24,7 +23,6 @@ import numpy as np
 import math
 import copy
 import time
-import pandas as pd
 import xxhash
 import gc
 

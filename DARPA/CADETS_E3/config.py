@@ -5,7 +5,7 @@
 ########################################################
 
 # The directory of the raw logs
-raw_dir = "/home/yinyuanl/Desktop/cadets/"
+raw_dir = "/the/absolute/path/of/cadets_e3/"
 
 # The directory to save all artifacts
 artifact_dir = "./artifact/"
@@ -35,7 +35,7 @@ database = 'test_e3_cadet_dataset_db'
 
 # Only config this setting when you have the problem mentioned
 # in the second point of the Problem&Solution section in README.
-# Othervise, please set it as None
+# Otherwise, please set it as None
 host = '/var/run/postgresql/'
 # host = None
 
@@ -131,6 +131,8 @@ BATCH = 1024
 lr=0.00005
 eps=1e-08
 weight_decay=0.01
+
+epoch_num=50
 
 # The size of time window, 60000000000 represent 1 min in nanoseconds.
 # The default setting is 15 minutes.

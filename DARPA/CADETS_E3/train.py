@@ -1,3 +1,8 @@
+##########################################################################################
+# Some of the code is adapted from:
+# https://github.com/pyg-team/pytorch_geometric/blob/master/examples/tgn.py
+##########################################################################################
+
 import logging
 
 from kairos_utils import *
@@ -109,7 +114,7 @@ if __name__ == "__main__":
     memory, gnn, link_pred, optimizer, neighbor_loader = init_models(node_feat_size=node_feat_size)
 
     # train the model
-    for epoch in tqdm(range(1, 51)):
+    for epoch in tqdm(range(1, epoch_num+1)):
         for g in train_data:
             loss = train(
                 train_data=g,

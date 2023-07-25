@@ -135,7 +135,6 @@ def cal_set_rel(s1, s2, node_IDF, tw_list):
     return count
 
 def anomalous_queue_construction(node_IDF, tw_list, graph_dir_path):
-    df_list = []
     history_list = []
     current_tw = {}
 
@@ -156,7 +155,6 @@ def anomalous_queue_construction(node_IDF, tw_list, graph_dir_path):
             jdata = eval(l)
             edge_loss_list.append(jdata['loss'])
             edge_list.append([str(jdata['srcmsg']), str(jdata['dstmsg'])])
-        df_list.append(pd.DataFrame(edge_loss_list))
         count, loss_avg, node_set, edge_set = cal_anomaly_loss(edge_loss_list, edge_list)
         current_tw['name'] = f_path
         current_tw['loss'] = loss_avg
@@ -167,10 +165,6 @@ def anomalous_queue_construction(node_IDF, tw_list, graph_dir_path):
         added_que_flag = False
         for hq in history_list:
             for his_tw in hq:
-                # if "11:48:42.606135188~2018-04-06 12:03:50.186115455.txt" in current_tw["name"]:
-                #     print(current_tw["name"], his_tw['name'])
-                #     print(cal_set_rel(current_tw['nodeset'], his_tw['nodeset'], node_IDF, tw_list))
-                #     print(current_tw['nodeset'] & his_tw['nodeset'])
                 if cal_set_rel(current_tw['nodeset'], his_tw['nodeset'], node_IDF, tw_list) != 0 and current_tw['name'] != his_tw['name']:
                     hq.append(copy.deepcopy(current_tw))
                     added_que_flag = True
