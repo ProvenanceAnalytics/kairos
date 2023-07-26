@@ -33,7 +33,7 @@ make pipeline
 
 ```graphs/```folder contains all the vectorized graphs.
 
-```graph_4_*``` folders contain the reconstruction results of the tested date.
+```graph_4_*``` folders contain the reconstruction results of the graphs.
 
 ```graph_visual``` folder contains all the summary graphs for attack investigation.
 
