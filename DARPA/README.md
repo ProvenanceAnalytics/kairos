@@ -5,7 +5,7 @@ Here we use CADETS E3 as the demo to help user get familiar with the pipeline of
 
 2. Refer to the [database settings](docs/database.md). Follow the instructions in the CADETS E3 section and create the database for it. 
 
-3. Open the config.py in the CADETS_E3 folder, set the variable ```raw_dir``` as the absolute path of the folder where your raw CADETS E3 data is.
+3. Open the config.py in the CADETS_E3 folder, set the variable ```raw_dir``` as the absolute path of the folder where your raw CADETS E3 data is. In addition, change the database-related variables (e.g. username, password, etc.) based on your database configurations.
 
 4. Run the Kairos pipeline based on the following scripts
 ```commandline

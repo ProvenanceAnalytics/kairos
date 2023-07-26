@@ -31,7 +31,7 @@ vis_re = artifact_dir + "vis_re/"
 ########################################################
 
 # Database name
-database = 'test_e3_cadet_dataset_db'
+database = 'tc_cadet_dataset_db'
 
 # Only config this setting when you have the problem mentioned
 # in the second point of the Problem&Solution section in README.
