@@ -137,3 +137,13 @@ epoch_num=50
 # The size of time window, 60000000000 represent 1 min in nanoseconds.
 # The default setting is 15 minutes.
 time_window_size = 60000000000 * 15
+
+
+########################################################
+#
+#                   Threshold
+#
+########################################################
+
+beta_day6 = 100
+beta_day7 = 100

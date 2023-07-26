@@ -139,7 +139,7 @@ if __name__ == "__main__":
             else:
                 anomaly_score = (anomaly_score) * (hq['loss'] + 1)
         name_list = []
-        if anomaly_score > 100:
+        if anomaly_score > beta_day6:
             name_list = []
             for i in hl:
                 name_list.append(i['name'])
@@ -157,7 +157,7 @@ if __name__ == "__main__":
             else:
                 anomaly_score = (anomaly_score) * (hq['loss'] + 1)
         name_list = []
-        if anomaly_score > 100:
+        if anomaly_score > beta_day7:
             name_list = []
             for i in hl:
                 name_list.append(i['name'])
