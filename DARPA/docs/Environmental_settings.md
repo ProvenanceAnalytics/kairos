@@ -1,4 +1,4 @@
-# Environmental setting
+# Environmental settings
 
 ## Prerequisites
 Although other versions of the applications might also work, we recommend users to use the same versions for better reproducing the experiments. 
