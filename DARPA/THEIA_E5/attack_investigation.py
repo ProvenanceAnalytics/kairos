@@ -25,6 +25,9 @@ replace_dic = {
         '/etc/bash_completion.d/':'/etc/bash_completion.d/*',
         '/usr/bin/python2.7':'/usr/bin/python2.7/*',
         '/usr/lib/python2.7':'/usr/lib/python2.7/*',
+        '/data/data/org.mozilla.fennec_firefox_dev/cache/':'/data/data/org.mozilla.fennec_firefox_dev/cache/*',
+        'UNNAMED':'UNNAMED*',
+        '/etc/fonts/':'/etc/fonts/*',
 }
 
 
@@ -37,15 +40,8 @@ def replace_path_name(path_name):
 
 # Users should manually put the detected anomalous time windows here
 attack_list = [
-        artifact_dir+'graph_4_10/2018-04-10 13:31:14.548738409~2018-04-10 13:46:36.161065223.txt',
-        artifact_dir+'graph_4_10/2018-04-10 14:02:17.001271389~2018-04-10 14:17:34.001373488.txt',
-        artifact_dir+'graph_4_10/2018-04-10 14:17:34.001373488~2018-04-10 14:33:18.350772859.txt',
-        artifact_dir+'graph_4_10/2018-04-10 14:33:18.350772859~2018-04-10 14:48:47.320442910.txt',
-        artifact_dir+'graph_4_10/2018-04-10 14:48:47.320442910~2018-04-10 15:03:54.307022037.txt',
-        artifact_dir+'graph_4_12/2018-04-12 12:39:06.592684498~2018-04-12 12:54:44.001888457.txt',
-        artifact_dir+'graph_4_12/2018-04-12 12:54:44.001888457~2018-04-12 13:09:55.026832462.txt',
-        artifact_dir+'graph_4_12/2018-04-12 13:09:55.026832462~2018-04-12 13:25:06.588370709.txt',
-        artifact_dir+'graph_4_12/2018-04-12 13:25:06.588370709~2018-04-12 13:40:07.178206094.txt',
+        artifact_dir+'graph_5_15/2019-05-15 13:58:15.520482252~2019-05-15 14:13:37.257086895.txt',
+        artifact_dir+'graph_5_15/2019-05-15 14:44:51.773840192~2019-05-15 15:00:26.765466538.txt',
 ]
 
 original_edges_count = 0
@@ -105,21 +101,11 @@ for e in gg.edges:
 # They won't change the detection results.
 def attack_edge_flag(msg):
     attack_nodes = [
-        '/home/admin/clean',
-        '/dev/glx_alsa_675',
-        '/home/admin/profile',
-        '/var/log/xdev',
-        '/etc/passwd',
-        '161.116.88.72',
-        '146.153.68.151',
-        '/var/log/mail',
-        '/tmp/memtrace.so',
-        #         '/tmp',
-        '/var/log/xdev',
-        '/var/log/wdev',
-        'gtcache',
-        'firefox',
-        #         '/var/log',
+        '208.203.20.42',
+        '189.141.204.211',
+        '/var/log/sshdlog',
+        '/usr/sbin/sshd',
+        '/usr/local/lib/firefox-54.0.1/firefox',
     ]
     flag = False
     for i in attack_nodes:
