@@ -13,7 +13,7 @@ Although other versions of the applications might also work, we recommend users 
    2. CUDA Version: 12.1
 
 ## Python & Libraries
-We recommend users to run the instructions below to install the corresponding libraries, but our requirements.txt is also be provided for users to check the versions of some libraries.
+We recommend users to run the instructions below to install the corresponding libraries, but our requirements.txt is also provided for users to check the versions of some libraries.
 ```commandline
 conda create -n kairos python=3.9
 conda activate kairos
