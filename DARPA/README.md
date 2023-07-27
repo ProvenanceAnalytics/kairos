@@ -47,4 +47,11 @@ make pipeline
 
 ```evaluation.log``` records the evaluation results for CADETS E3 dataset.
 
-
+6. Note: Kairos detection performance relies on the quality of the trained GNN models. Due to the different initialized weights of the models, GNN models might not be converged using our provided epoch number. If the detection results are different from those in the paper, we recommend users to either of each:
+   1. Adjust the epoch numbers for model training and adjust the thresholds to achieve the same performance as in the paper.
+   2. Use the models we trained for evaluations. To do so, users need to change the path of the loaded model in the ```test.py```. Then run the following scripts:
+   ```commandline
+   make test
+   make anomaly_detection
+   ```
+   Then, users should be able to obtain the same results in the paper with our pre-set thresholds.
