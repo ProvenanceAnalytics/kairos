@@ -63,7 +63,7 @@ def time_to_datetime_US(s):
 
 def datetime_to_ns_time(date):
     """
-    :param date: str   format: %Y-%m-%d %H:%M:%S   例如 2013-10-10 23:40:00
+    :param date: str   format: %Y-%m-%d %H:%M:%S   e.g. 2013-10-10 23:40:00
     :return: nano timestamp
     """
     timeArray = time.strptime(date, "%Y-%m-%d %H:%M:%S")
@@ -73,7 +73,7 @@ def datetime_to_ns_time(date):
 
 def datetime_to_ns_time_US(date):
     """
-    :param date: str   format: %Y-%m-%d %H:%M:%S   例如 2013-10-10 23:40:00
+    :param date: str   format: %Y-%m-%d %H:%M:%S   e.g. 2013-10-10 23:40:00
     :return: nano timestamp
     """
     tz = pytz.timezone('US/Eastern')
@@ -86,7 +86,7 @@ def datetime_to_ns_time_US(date):
 
 def datetime_to_timestamp_US(date):
     """
-    :param date: str   format: %Y-%m-%d %H:%M:%S   例如 2013-10-10 23:40:00
+    :param date: str   format: %Y-%m-%d %H:%M:%S   e.g. 2013-10-10 23:40:00
     :return: nano timestamp
     """
     tz = pytz.timezone('US/Eastern')
