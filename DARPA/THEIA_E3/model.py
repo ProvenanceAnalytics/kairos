@@ -4,7 +4,7 @@ from config import *
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 criterion = nn.CrossEntropyLoss()
 
-max_node_num = 268243  # the number of nodes in node2id table +1
+max_node_num = 828313  # the number of nodes in node2id table +1
 min_dst_idx, max_dst_idx = 0, max_node_num
 # Helper vector to map global node indices to local ones.
 assoc = torch.empty(max_node_num, dtype=torch.long, device=device)

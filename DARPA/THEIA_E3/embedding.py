@@ -98,13 +98,13 @@ def gen_vectorized_graphs(cur, node2higvec, rel2vec, logger):
         """ % (start_timestamp, end_timestamp)
         cur.execute(sql)
         events = cur.fetchall()
-        print('2018-04-' + str(day), " events count:", str(len(events)))
+        logger.info('2018-04-' + str(day), " events count:", str(len(events)))
         edge_list = []
         for e in events:
             edge_temp = [int(e[1]), int(e[4]), e[2], e[5]]
             if e[2] in rel2id:
                 edge_list.append(edge_temp)
-        print('2018-04-' + str(day), " edge list len:", str(len(edge_list)))
+        logger.info('2018-04-' + str(day), " edge list len:", str(len(edge_list)))
 
         if len(edge_list) == 0:
             continue

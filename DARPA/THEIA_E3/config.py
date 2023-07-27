@@ -134,7 +134,7 @@ lr=0.00005
 eps=1e-08
 weight_decay=0.01
 
-epoch_num=31
+epoch_num=30
 
 # The size of time window, 60000000000 represent 1 min in nanoseconds.
 # The default setting is 15 minutes.
