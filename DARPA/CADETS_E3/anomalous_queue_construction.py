@@ -129,6 +129,7 @@ def cal_set_rel(s1, s2, node_IDF, tw_list):
             # sets nor excluded node list above.
             IDF = math.log(len(tw_list) / (1))
 
+        # Compare the IDF with a rareness threshold α
         if IDF > (math.log(len(tw_list) * 0.9)):
             logger.info(f"node:{i}, IDF:{IDF}")
             count += 1

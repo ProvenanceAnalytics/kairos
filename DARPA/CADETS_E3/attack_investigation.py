@@ -42,7 +42,7 @@ attack_list = [
     artifact_dir+'/graph_4_6/2018-04-06 12:03:50.186115455~2018-04-06 14:01:32.489584227.txt',
 ]
 
-# 生成加权图
+
 original_edges_count = 0
 graphs = []
 gg = nx.DiGraph()
@@ -99,7 +99,7 @@ for e in gg.edges:
 # Define the attack nodes. They are **only be used to plot the colors of attack nodes and edges**.
 # They won't change the detection results.
 def attack_edge_flag(msg):
-    attack_edge_type = [
+    attack_nodes = [
         '/tmp/vUgefal',
         'vUgefal',
         '/var/log/devc',
@@ -111,7 +111,7 @@ def attack_edge_flag(msg):
         "'nginx'",
     ]
     flag = False
-    for i in attack_edge_type:
+    for i in attack_nodes:
         if i in msg:
             flag = True
     return flag

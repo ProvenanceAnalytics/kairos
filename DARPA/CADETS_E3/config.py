@@ -62,10 +62,6 @@ edge_reversed = [
     "EVENT_RECVMSG"
 ]
 
-# The following edge types are not considered when loading the raw
-# logs to the database
-edge_excluded = ["EVENT_FLOWS_TO"]
-
 # The following edges are the types only considered to construct the
 # temporal graph for experiments.
 include_edge_type=[

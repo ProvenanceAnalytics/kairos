@@ -72,7 +72,7 @@ def gen_feature(cur):
     for i in tqdm(node_msg_dic_list):
         vec=FH_string.transform([i]).toarray()
         node2higvec.append(vec)
-    node2higvec = np.array(node2higvec).reshape([-1, 16])
+    node2higvec = np.array(node2higvec).reshape([-1, node_embedding_dim])
     torch.save(node2higvec, artifact_dir + "node2higvec")
     return node2higvec
 
@@ -105,7 +105,6 @@ def gen_vectorized_graphs(cur, node2higvec, rel2vec, logger):
             if e[2] in include_edge_type:
                 edge_list.append(edge_temp)
         logger.info(f'2018-04-{day}, edge list len: {len(edge_list)}')
-        # 保存数据集数据
         dataset = TemporalData()
         src = []
         dst = []

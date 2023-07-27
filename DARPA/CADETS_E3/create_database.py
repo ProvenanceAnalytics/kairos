@@ -195,42 +195,32 @@ def create_node_list(cur, connect):
 
     return nodeid2msg, subject_uuid2hash, file_uuid2hash, net_uuid2hash
 
-def store_event(file_path, cur, connect, reverse, exclude, nodeid2msg, subject_uuid2hash, file_uuid2hash, net_uuid2hash):
+def store_event(file_path, cur, connect, reverse, nodeid2msg, subject_uuid2hash, file_uuid2hash, net_uuid2hash):
     datalist = []
     for file in tqdm(filelist):
         with open(file_path + file, "r") as f:
             for line in f:
-                exclude_re = [0] * len(exclude)
-                if '{"datum":{"com.bbn.tc.schema.avro.cdm18.Event"' in line:
-                    for i in range(len(exclude)):
-                        if exclude[i] in line:
-                            exclude_re[i] = 1
-                    check_re = sum(exclude_re)
-                    if check_re == 0:
-                        subject_uuid = re.findall('"subject":{"com.bbn.tc.schema.avro.cdm18.UUID":"(.*?)"}', line)
-                        predicateObject_uuid = re.findall('"predicateObject":{"com.bbn.tc.schema.avro.cdm18.UUID":"(.*?)"}',
-                                                          line)
-                        if len(subject_uuid) > 0 and len(predicateObject_uuid) > 0:
-                            if subject_uuid[0] in subject_uuid2hash and ( predicateObject_uuid[0] in file_uuid2hash or
-                                                                          predicateObject_uuid[0] in net_uuid2hash):
-                                relation_type = re.findall('"type":"(.*?)"', line)[0]
-                                time_rec = re.findall('"timestampNanos":(.*?),', line)[0]
-                                time_rec = int(time_rec)  # 将时间转成秒为单位
-                                subjectId = subject_uuid2hash[subject_uuid[0]]
-                                if predicateObject_uuid[0] in file_uuid2hash:
-                                    objectId = file_uuid2hash[predicateObject_uuid[0]]
-                                elif predicateObject_uuid[0] in net_uuid2hash:
-                                    objectId = net_uuid2hash[predicateObject_uuid[0]]
-                                else:
-                                    objectId = subject_uuid2hash[predicateObject_uuid[0]]
-                                if relation_type in reverse:
-                                    datalist.append(
-                                        [objectId, nodeid2msg[objectId], relation_type, subjectId, nodeid2msg[subjectId],
-                                         time_rec])
-                                else:
-                                    datalist.append(
-                                        [subjectId, nodeid2msg[subjectId], relation_type, objectId, nodeid2msg[objectId],
-                                         time_rec])
+                if '{"datum":{"com.bbn.tc.schema.avro.cdm18.Event"' in line and "EVENT_FLOWS_TO" not in line:
+                    subject_uuid = re.findall('"subject":{"com.bbn.tc.schema.avro.cdm18.UUID":"(.*?)"}', line)
+                    predicateObject_uuid = re.findall('"predicateObject":{"com.bbn.tc.schema.avro.cdm18.UUID":"(.*?)"}', line)
+                    if len(subject_uuid) > 0 and len(predicateObject_uuid) > 0:
+                        if subject_uuid[0] in subject_uuid2hash and (predicateObject_uuid[0] in file_uuid2hash or predicateObject_uuid[0] in net_uuid2hash):
+                            relation_type = re.findall('"type":"(.*?)"', line)[0]
+                            time_rec = re.findall('"timestampNanos":(.*?),', line)[0]
+                            time_rec = int(time_rec)
+                            subjectId = subject_uuid2hash[subject_uuid[0]]
+                            if predicateObject_uuid[0] in file_uuid2hash:
+                                objectId = file_uuid2hash[predicateObject_uuid[0]]
+                            else:
+                                objectId = net_uuid2hash[predicateObject_uuid[0]]
+                            if relation_type in reverse:
+                                datalist.append(
+                                    [objectId, nodeid2msg[objectId], relation_type, subjectId, nodeid2msg[subjectId],
+                                     time_rec])
+                            else:
+                                datalist.append(
+                                    [subjectId, nodeid2msg[subjectId], relation_type, objectId, nodeid2msg[objectId],
+                                     time_rec])
 
     sql = '''insert into event_table
                          values %s
@@ -265,7 +255,6 @@ if __name__ == "__main__":
         cur=cur,
         connect=connect,
         reverse=edge_reversed,
-        exclude=edge_excluded,
         nodeid2msg=nodeid2msg,
         subject_uuid2hash=subject_uuid2hash,
         file_uuid2hash=file_uuid2hash,
