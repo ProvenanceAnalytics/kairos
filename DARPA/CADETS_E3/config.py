@@ -34,8 +34,8 @@ vis_re = artifact_dir + "vis_re/"
 database = 'tc_cadet_dataset_db'
 
 # Only config this setting when you have the problem mentioned
-# in the second point of the Problem&Solution section in README.
-# Otherwise, please set it as None
+# in the Troubleshooting section in settings/environment-settings.md.
+# Otherwise, set it as None
 host = '/var/run/postgresql/'
 # host = None
 
