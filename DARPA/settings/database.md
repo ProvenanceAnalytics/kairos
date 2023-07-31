@@ -1,5 +1,4 @@
-# Setting the database
-Links to create the corresponding database and tables:
+# Setting Databases
 
 [1. CADETS E3](#cadets-e3)
 
@@ -14,8 +13,6 @@ Links to create the corresponding database and tables:
 [6. ClearScope E5](#clearscope-e5)
 
 [7. OpTC](#optc)
-
-
 
 
 ## CADETS E3
