@@ -1,17 +1,16 @@
 # Environment settings
 
 ## Prerequisites
-We use the following settings to run the experiments reported in the paper.
+We use the following settings to run the experiments reported in the paper:
 1. OS Version: 5.19.0-46-generic #47~22.04.1-Ubuntu
 2. Anaconda: 23.3.1
-3. PostgresSQL: Version 15.3, Ubuntu 15.3-1.pgdg22.04+1  
-   ([installation guide](https://www.cherryservers.com/blog/how-to-install-and-setup-postgresql-server-on-ubuntu-20-04))
+3. PostgresSQL: Version 15.3, Ubuntu 15.3-1.pgdg22.04+1 ([installation guide](https://www.cherryservers.com/blog/how-to-install-and-setup-postgresql-server-on-ubuntu-20-04))
 4. GraphViz: 2.43.0 
 5. GPU (Driver Version: 530.41.03): CUDA Version 12.1
 
 ## Python Libraries
 Install the following libraries, 
-or use our [`requirements.txt`](requirements.txt).
+or use our [`requirements.txt`](requirements.txt):
 ```commandline
 conda create -n kairos python=3.9
 conda activate kairos
