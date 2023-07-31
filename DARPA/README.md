@@ -38,7 +38,7 @@ make pipeline
 where
 * `graphs/` contains all the vectorized graphs.
 
-* `graph_4_*.` contains the reconstruction results of the graphs.
+* `graph_4_*/` contains the reconstruction results of the graphs.
 
 * `graph_visual/` contains all the summary graphs for attack investigation.
 
