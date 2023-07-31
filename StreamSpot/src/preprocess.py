@@ -1,5 +1,5 @@
-# 输入：Manzoor数据集
-# 输出：一共600个行为对应的图数据集
+# Input: StreamSpot dataset
+# Output: Vectorized graphs
 
 import functools
 import os
@@ -11,30 +11,28 @@ from torch_geometric.data import *
 
 from config import *
 
-process_raw_data = False  # 如果数据库中已经将原始数据加载进来就设置为False， 如果第一次运行此代码，则需要设置为True
+# If the datum have already been loaded in the database before, set this as False.
+# Set it as True if it is the first time running this code.
+process_raw_data = False
 
-# 加载参数
-parser = (argparse.ArgumentParser())
-parse_encoder(parser)
-args = parser.parse_args()
 
-# 连接数据库
 import psycopg2
 from psycopg2 import extras as ex
 
-connect = psycopg2.connect(host=args.db_host,
-                           database=args.db_name,
-                           user=args.db_user,
-                           password=args.db_passwd,
-                           port='5432'  # 一般是5432
+connect = psycopg2.connect(database = 'streamspot',
+                           host = '/var/run/postgresql/',
+                           user = 'postgres',
+                           password = 'postgres',
+                           port = '5432'
                            )
-# 创建一个cursor来执行数据库的操作
+
+# Create a cursor to operate the database
 cur = connect.cursor()
-# 发生错误时需要回滚
+# Rollback when there exists any problem
 connect.rollback()
 
 if process_raw_data:
-    path = "../data/all.tsv"  # 数据集的路径
+    path = "/home/yinyuanl/Desktop/all.tsv"  # The paths to the dataset.
     datalist = []
     with open(path) as f:
         for line in tqdm(f):
@@ -45,7 +43,7 @@ if process_raw_data:
                  values %s
                 '''
                 ex.execute_values(cur, sql, datalist, page_size=10000)
-                connect.commit()  # 需要手动提交
+                connect.commit()
                 datalist = []
 
 node_type = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'}
@@ -124,6 +122,7 @@ for i in edge_type:
     edge2onehot[i] = edgevec[c]
     c += 1
 
+os.system("mkdir -p ../data/")
 for graph_id in tqdm(range(600)):
     sql = "select * from raw_data where graph_id='{graph_id}' ORDER BY _id;".format(graph_id=graph_id)
     cur.execute(sql)
@@ -140,7 +139,7 @@ for graph_id in tqdm(range(600)):
         dst.append(int(i[2]))
         msg_t = torch.cat([node2onehot[i[1]], edge2onehot[i[4]], node2onehot[i[3]]], dim=0)
         msg.append(msg_t)
-        t.append(int(i[-1]))    # Here Zijun uses logical order of the event to represent the time
+        t.append(int(i[-1]))    # Use logical order of the event to represent the time
 
     dataset.src = torch.tensor(src)
     dataset.dst = torch.tensor(dst)
