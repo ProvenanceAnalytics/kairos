@@ -1,12 +1,23 @@
-# Create the database
+# StreamSpot
 
-Execute SQL: `CREATE DATABASE manzoor_db;`
+## Environment settings
+Please follow the description in the [environment settings](../../DARPA/settings/environment-settings.md) to set up the required environment for Kairos.
 
+## Create the database
+Please follow the instructions below to create the database for StreamSpot dataset
 
-# Create the table
+```commandline
+# execute the psql with postgres user
+sudo -u postgres psql
 
-Execute SQL: 
-`create table IF NOT EXISTS raw_data
+# create the database
+postgres=# create database streamspot;
+
+# switch to the created database
+postgres=# \connect streamspot;
+
+# create the table and grant the privileges to postgres
+streamspot=# create table IF NOT EXISTS raw_data
 (
     source_id        varchar,
     source_type      varchar,
@@ -19,9 +30,13 @@ Execute SQL:
             primary key
 );
 
-alter table raw_data
-    owner to psql;
-`
+streamspot=# alter table raw_data owner to postgres;
+```
+
+
+## Instructions to run experiments on StreamSpot dataset
+TBA
+
 
 
 
