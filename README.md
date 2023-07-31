@@ -19,6 +19,8 @@ from this repository in your own work:
 We provide a [demo](DARPA/README.md)
 to illustrate step-by-step
 how you can run the code end-to-end.
+Additionally, we provide IPython notebook
+scripts for all of our experiments.
 > Due to the extended amount of time it takes to
 > train a model, we also provide pre-trained models
 > of our experimental datasets.
