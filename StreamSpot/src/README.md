@@ -35,7 +35,15 @@ streamspot=# alter table raw_data owner to postgres;
 
 
 ## Instructions to run experiments on StreamSpot dataset
-TBA
+Run the scripts below, then the reconstruction and detection results will be recorded in results.txt. Note: make sure your machine has enough memory (at least 64GB) to run the experiments.
+```commandline
+conda activate kairos
+cd src
+python preprocess.py
+python train.py
+python test.py > results.txt
+python test.py >> results.txt
+```
 
 
 
