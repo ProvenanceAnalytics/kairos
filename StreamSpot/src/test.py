@@ -1,15 +1,22 @@
+##########################################################################################
+# Some of the code is adapted from:
+# https://github.com/pyg-team/pytorch_geometric/blob/master/examples/tgn.py
+##########################################################################################
+
 import os
 import os.path as osp
 
 import torch
 from torch.nn import Linear
 
-from torch_geometric.loader import TemporalDataLoader
+# from torch_geometric.loader import TemporalDataLoader
 from torch_geometric.nn import TGNMemory, TransformerConv
 from torch_geometric.nn.models.tgn import (LastNeighborLoader, IdentityMessage,
                                            LastAggregator)
 from torch_geometric import *
 from torch_geometric.utils import negative_sampling
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import confusion_matrix
 from tqdm import tqdm
 import networkx as nx
 import numpy as np
@@ -20,7 +27,7 @@ import time
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 device = 'cpu'
-# msg的特征采取    [src_node_feature,edge_attr,dst_node_feature]的格式
+# msg structure:      [src_node_feature,edge_attr,dst_node_feature]
 train_data = torch.load("../data/graph_0.TemporalData")
 
 max_node_num = 5045000
@@ -41,7 +48,6 @@ class GraphAttentionEmbedding(torch.nn.Module):
         rel_t_enc = self.time_enc(rel_t.to(x.dtype))
         edge_attr = torch.cat([rel_t_enc, msg], dim=-1)
         return self.conv(x, edge_index, edge_attr)
-
 
 class LinkPredictor(torch.nn.Module):
     def __init__(self, in_channels):
@@ -85,7 +91,7 @@ criterion = torch.nn.BCEWithLogitsLoss()
 assoc = torch.empty(max_node_num, dtype=torch.long, device=device)
 BATCH=1024
 
-@torch.no_grad()  # 声明以下函数不执行梯度
+@torch.no_grad()
 def test_new(inference_data):
     # memory.eval()
     # gnn.eval()
@@ -99,8 +105,8 @@ def test_new(inference_data):
     aps, aucs = [], []
     pos_o = []
 
-    test_loader = TemporalDataLoader(inference_data, batch_size=BATCH)
-    for batch in test_loader:
+    # test_loader = TemporalDataLoader(inference_data, batch_size=BATCH)
+    for batch in inference_data.seq_batches(batch_size=BATCH):
         batch = batch.to(device)
         src, pos_dst, t, msg = batch.src, batch.dst, batch.t, batch.msg
         neg_dst = torch.randint(min_dst_idx, max_dst_idx + 1, (src.size(0),),
@@ -136,8 +142,6 @@ gnn.eval()
 link_pred.eval()
 
 if os.path.exists("val_ans_old.pt") is not True:
-    ap = []
-    auc = []
     graph_label = []
     all_loss = []
     start = time.time()
@@ -193,10 +197,26 @@ else:
     threshold = max(loss_list)
 
 
-if os.path.exists("test_ans_old.pt") is not True:
+def classifier_evaluation(y_test, y_test_pred):
+    tn, fp, fn, tp =confusion_matrix(y_test, y_test_pred).ravel()
+    print('tn:',tn)
+    print('fp:',fp)
+    print('fn:',fn)
+    print('tp:',tp)
+    precision=tp/(tp+fp)
+    recall=tp/(tp+fn)
+    accuracy=(tp+tn)/(tp+tn+fp+fn)
+    fscore=2*(precision*recall)/(precision+recall)
+    auc_val=roc_auc_score(y_test, y_test_pred)
+    print("precision:",precision)
+    print("recall:",recall)
+    print("fscore:",fscore)
+    print("accuracy:",accuracy)
+    print("auc_val:",auc_val)
+    return precision,recall,fscore,accuracy,auc_val
 
-    ap = []
-    auc = []
+
+if os.path.exists("test_ans_old.pt") is not True:
     graph_label = []
     all_loss = []
     start = time.time()
@@ -252,6 +272,9 @@ if os.path.exists("test_ans_old.pt") is not True:
     test_ans_old = [all_loss, graph_label]
     torch.save(test_ans_old, "test_ans_old.pt")
 else:
+    labels = []
+    preds = []
+
     test_ans = torch.load("test_ans_old.pt")
     test_loss_list = []
     index = 0
@@ -262,10 +285,17 @@ else:
             pred = 1
         else:
             pred = 0
+
+        labels.append(label)
+        preds.append(pred)
+
         index += 1
+
+        # If prediction is incorrect, print the information of the tested graph
         if pred != label:
             print(f"{index=} {temp_loss=} {label=} {pred=} {pred == label}")
-        # 如果什么都没有输出，说明预测全部正确
+
+    classifier_evaluation(labels, preds)
 
 
 

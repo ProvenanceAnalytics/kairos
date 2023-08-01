@@ -9,11 +9,9 @@ import torch
 from tqdm import tqdm
 from torch_geometric.data import *
 
-from config import *
-
 # If the datum have already been loaded in the database before, set this as False.
 # Set it as True if it is the first time running this code.
-process_raw_data = False
+process_raw_data = True
 
 
 import psycopg2
@@ -32,7 +30,7 @@ cur = connect.cursor()
 connect.rollback()
 
 if process_raw_data:
-    path = "/home/yinyuanl/Desktop/all.tsv"  # The paths to the dataset.
+    path = "/the/absolute/path/of/raw_log"  # The paths to the dataset.
     datalist = []
     with open(path) as f:
         for line in tqdm(f):

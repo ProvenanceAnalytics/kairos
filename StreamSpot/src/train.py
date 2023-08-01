@@ -1,3 +1,8 @@
+##########################################################################################
+# Some of the code is adapted from:
+# https://github.com/pyg-team/pytorch_geometric/blob/master/examples/tgn.py
+##########################################################################################
+
 import os.path as osp
 
 import torch
@@ -5,7 +10,7 @@ from torch.nn import Linear
 
 from torch_geometric.datasets import JODIEDataset
 from torch_geometric.datasets import ICEWS18
-from torch_geometric.loader import TemporalDataLoader
+# from torch_geometric.loader import TemporalDataLoader
 from torch_geometric.nn import TGNMemory, TransformerConv
 from torch_geometric.nn.models.tgn import (LastNeighborLoader, IdentityMessage,
                                            LastAggregator)
@@ -18,15 +23,15 @@ import math
 import copy
 import re
 import time
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 device='cpu'
-# msg的特征采取    [src_node_feature,edge_attr,dst_node_feature]的格式
+# msg structure:      [src_node_feature,edge_attr,dst_node_feature]
 train_data=torch.load("../data/graph_0.TemporalData")
 train_data2=torch.load("../data/graph_100.TemporalData")
 train_data3=torch.load("../data/graph_200.TemporalData")
 train_data4=torch.load("../data/graph_400.TemporalData")
 train_data5=torch.load("../data/graph_500.TemporalData")
-test_data=torch.load("../data/graph_305.TemporalData")
+# test_data=torch.load("../data/graph_305.TemporalData")
 val_data=torch.load("../data/graph_505.TemporalData")
 
 def graph_merge(a,b):
@@ -114,9 +119,9 @@ def train():
 
     total_loss = 0
 
-    train_loader = TemporalDataLoader(train_data, batch_size=BATCH)
+    # train_loader = TemporalDataLoader(train_data, batch_size=BATCH)
 
-    for batch in train_loader:
+    for batch in train_data.seq_batches(batch_size=BATCH):
         batch = batch.to(device)
         optimizer.zero_grad()
 
@@ -155,7 +160,7 @@ def train():
     return total_loss / train_data.num_events
 
 
-@torch.no_grad()  # 声明以下函数不执行梯度
+@torch.no_grad()
 def test_new(inference_data):
     memory.eval()
     gnn.eval()
@@ -169,8 +174,8 @@ def test_new(inference_data):
     aps, aucs = [], []
     pos_o = []
 
-    test_loader = TemporalDataLoader(inference_data, batch_size=BATCH)
-    for batch in test_loader:
+    # test_loader = TemporalDataLoader(inference_data, batch_size=BATCH)
+    for batch in inference_data.seq_batches(batch_size=BATCH):
         batch = batch.to(device)
         src, pos_dst, t, msg = batch.src, batch.dst, batch.t, batch.msg
         neg_dst = torch.randint(min_dst_idx, max_dst_idx + 1, (src.size(0),),
@@ -205,10 +210,7 @@ for epoch in tqdm(range(1, 11)):
     print(f'  Epoch: {epoch:02d}, Loss: {loss:.4f}')
 
     test_ap, test_auc, pos_out_test, neg_out_test, loss_test = test_new(val_data)
-    print(f'val_data:  Test AP: {test_ap:.4f}, Test AUC: {test_auc:.4f}, Loss: {loss_test:.4f}')
-
-    test_ap, test_auc, pos_out_test, neg_out_test, loss_test = test_new(test_data)
-    print(f'test_data:  Test AP: {test_ap:.4f}, Test AUC: {test_auc:.4f}, Loss: {loss_test:.4f}')
+    print(f'val_data: Loss: {loss_test:.4f}')
 
 model = [memory, gnn, link_pred, neighbor_loader]
 torch.save(model, "model_saved.pt")
