@@ -459,5 +459,36 @@ tc_e5_clearscope_dataset_db=# create unique index node2id_hash_id_uindex on node
 ```
 
 ## OpTC
-TBA
+```commandline
+# execute the psql with postgres user
+sudo -u postgres psql
+
+# create the database
+postgres=# create database optc_db;
+
+# switch to the created database
+postgres=# \connect optc_db;
+
+# create the event table and grant the privileges to postgres
+optc_db=# create table event_table
+(
+    src_id     varchar,
+    src_type   varchar,
+    edge_type  varchar,
+    dst_id     varchar,
+    dst_type   varchar,
+    hostname   varchar,
+    timestamp  bigint,
+    data_label varchar
+);
+optc_db=# alter table event_table owner to postgres;
+
+# create the node2id table
+optc_db=# create table nodeid2msg
+(
+    node_id varchar,
+    msg     varchar
+);
+optc_db=# alter table nodeid2msg owner to postgres;
+```
 
