@@ -1,10 +1,10 @@
 # StreamSpot
 
-## Environment settings
-Please follow the description in the [environment settings](../../DARPA/settings/environment-settings.md) to set up the required environment for Kairos.
+## Environment Settings
+Follow the description in the [environment settings](../../DARPA/settings/environment-settings.md) to set up the required environment for Kairos.
 
 ## Create the database
-Please follow the instructions below to create the database for StreamSpot dataset
+Use the following commands to create the database for the StreamSpot dataset
 
 ```commandline
 # execute the psql with postgres user
@@ -33,9 +33,10 @@ streamspot=# create table IF NOT EXISTS raw_data
 streamspot=# alter table raw_data owner to postgres;
 ```
 
+## Running StreamSpot experiments
+Run the commands below to obtain the reconstruction and detection results in `results.txt`. 
+> Make sure your machine has enough memory (at least 64GB) to run the experiments.
 
-## Instructions to run experiments on StreamSpot dataset
-Run the scripts below, then the reconstruction and detection results will be recorded in results.txt. Note: make sure your machine has enough memory (at least 64GB) to run the experiments.
 ```commandline
 conda activate kairos
 cd src
@@ -45,8 +46,6 @@ python test.py > results.txt
 python test.py >> results.txt
 ```
 
-
-
-
-
-
+Instead of training the StreamSpot model, 
+you can use our pre-trained model [here](https://drive.google.com/drive/u/0/folders/1YAKoO3G32xlYrCs4BuATt1h_hBvvEB6C)
+and skip to testing directly.
