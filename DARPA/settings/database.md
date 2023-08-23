@@ -142,9 +142,13 @@ tc_theia_dataset_db=# alter table netflow_node_table owner to postgres;
 # create the subject table
 tc_theia_dataset_db=# create table subject_node_table
 (
-    node_uuid varchar,
-    hash_id   varchar,
-    exec      varchar
+    node_uuid varchar not null,
+    hash_id   varchar not null,
+    "cmdLine" varchar not null,
+    tgid      varchar not null,
+    path      varchar not null,
+    constraint subject_node_table_pk
+        primary key (node_uuid, hash_id)
 );
 tc_theia_dataset_db=# alter table subject_node_table owner to postgres;
 
